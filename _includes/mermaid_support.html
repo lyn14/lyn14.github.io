@@ -1,0 +1,52 @@
+<!-- Mermaid 流程图支持 -->
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>
+  // 初始化 Mermaid
+  mermaid.initialize({
+    startOnLoad: false,  // 手动控制渲染
+    theme: 'default',
+    themeVariables: {
+      primaryColor: '#4A90E2',
+      primaryTextColor: '#fff',
+      primaryBorderColor: '#357ABD',
+      lineColor: '#67B',
+      secondaryColor: '#F0F8FF',
+      tertiaryColor: '#fff'
+    },
+    flowchart: {
+      curve: 'basis',
+      padding: 15
+    },
+    sequence: {
+      diagramMarginX: 50,
+      diagramMarginY: 10,
+      actorMargin: 50,
+      width: 150,
+      height: 65
+    }
+  });
+
+  // 处理 Jekyll/Rouge 生成的代码块
+  // 将 <pre><code class="language-mermaid"> 转换为 <div class="mermaid">
+  document.addEventListener('DOMContentLoaded', function() {
+    // 查找所有 mermaid 代码块
+    const mermaidCodeBlocks = document.querySelectorAll('code.language-mermaid');
+    
+    mermaidCodeBlocks.forEach(function(codeBlock) {
+      // 获取代码内容
+      const mermaidCode = codeBlock.textContent;
+      
+      // 创建新的 div 元素
+      const mermaidDiv = document.createElement('div');
+      mermaidDiv.className = 'mermaid';
+      mermaidDiv.textContent = mermaidCode;
+      
+      // 替换原来的 pre 元素
+      const preElement = codeBlock.parentElement;
+      preElement.parentElement.replaceChild(mermaidDiv, preElement);
+    });
+    
+    // 渲染所有 mermaid 图表
+    mermaid.run();
+  });
+</script>
